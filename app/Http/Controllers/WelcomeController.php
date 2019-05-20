@@ -44,4 +44,19 @@ class WelcomeController extends Controller
  
        return back()->withSuccess('Image was deleted successfully');
    }
+    
+   public function list()
+   {
+       $url = 'https://s3.' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/' . env('AWS_BUCKET') . '/';
+       $images = array();
+       $files = Storage::disk('s3')->files('images');
+           foreach ($files as $file) {
+               $images[] = [
+                   'name' => str_replace('images/', '', $file),
+                   'src' => $url . $file
+               ];
+           }
+        //$json_decode($images)
+       return response(json_encode($images, JSON_UNESCAPED_SLASHES));
+   }
 }
