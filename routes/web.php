@@ -12,4 +12,5 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/list', 'WelcomeController@list');
 Route::resource('images', 'WelcomeController', ['only' => ['store', 'destroy']]);
